@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from "react";
 import Field from './components/Field';
+import FieldBattle from "./services/FieldBattle";
 
 class App extends Component {
   constructor(props) {
@@ -9,11 +10,22 @@ class App extends Component {
       whoseMove: 'user', //TODO: рандомно определять 1 и 0
       userName: '',
       compName: ''
-
     }
+    this.userPlayer = null;
+    this.compPlayer = null;
   }
 
-  handleGame = (state) => this.setState({isPlayGame: state});
+  handleGame = (state) => {
+    if (!state) {
+      // Сбрасываем игру и все состояния
+    } else {
+      // Начинаем игру
+      // Инициализируем 2 поля боя: игрока и компьютера
+      this.userPlayer = new FieldBattle(this.state.userName);
+      this.compPlayer = new FieldBattle(this.state.compName);
+    }
+    this.setState({isPlayGame: state})
+  };
 
   setNamePlayer = (key, ev) => {
     console.log(key)
@@ -25,6 +37,9 @@ class App extends Component {
     const { isPlayGame, userName, compName } = this.state;
 
     console.log("this.state", this.state)
+
+    console.log("userPlayer", this.userPlayer);
+    console.log("compPlayer", this.compPlayer);
 
     return (
       <section className="b-game">
