@@ -17,7 +17,7 @@
   width: 700px;
   /* height: 400px; */
   margin: 0 auto 20px;
-  padding: 30px 10px;
+  padding: 90px 10px 30px;
   /* border: 1px dashed blue; */
   box-shadow: 0 0 3px 1px inset black;
   border-radius: 10px;
@@ -44,10 +44,26 @@
   position: relative;
 }
 
-.b-game__field-row {
+.b-game__field__user input,
+.b-game__field__comp input,
+.b-game__field__user__name,
+.b-game__field__comp__name 
+{
+  position: absolute;
+  display: block;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: green;
+  font-weight: bold;
 }
 
+.b-game__field__comp__name {
+  color: red;
+}
 
+.b-game__field-row {
+}
 
 .b-game__field-row,
 .b-game__field-cell {
