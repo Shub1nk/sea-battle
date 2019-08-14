@@ -36,7 +36,7 @@
   /* margin-bottom: 10px; */
 }
 
-.b-game__field__user, 
+.b-game__field__user,
 .b-game__field__comp {
   box-shadow: 0 0 0 1px black;
   height: 300px;
@@ -44,11 +44,18 @@
   position: relative;
 }
 
+.b-game__field__user {
+  cursor: not-allowed;
+}
+
+.b-game__field__comp {
+  cursor: pointer;
+}
+
 .b-game__field__user input,
 .b-game__field__comp input,
 .b-game__field__user__name,
-.b-game__field__comp__name 
-{
+.b-game__field__comp__name {
   position: absolute;
   display: block;
   top: -60px;
@@ -84,12 +91,19 @@
   box-shadow: 0 0 0 1px inset black;
 }
 
-.b-game__field-cell__item:hover {
+.b-game__field__comp .b-game__field-cell__item:hover {
   animation: blinking 2s ease-in-out infinite;
+}
+/* .b-game__field-cell__item:hover {
+  animation: blinking 2s ease-in-out infinite;
+} */
+
+.b-game__field-cell__item_deck {
+  background: lightblue;
 }
 
 .b-game__coordinate__horizontal {
-  position: absolute;  
+  position: absolute;
   bottom: 100%;
 }
 
@@ -101,7 +115,7 @@
 }
 
 .b-game__coordinate__vertical {
-  position: absolute;  
+  position: absolute;
   right: 100%;
   line-height: 30px;
 }
@@ -117,16 +131,14 @@
   0% {
     transform: scale(1);
     box-shadow: 0 0 0 1px inset black;
-    background: rgba(255, 255, 255, 1)
   }
   50% {
     transform: scale(1.2);
     box-shadow: 0 0 0 3px inset black;
-    background: rgba(255, 0, 0, .5)
+    background: rgba(255, 0, 0, 0.5);
   }
   100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 1px inset black;
-      background: rgba(255, 255, 255, 1)
+    transform: scale(1);
+    box-shadow: 0 0 0 1px inset black;
   }
 }

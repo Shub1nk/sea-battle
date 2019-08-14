@@ -1,29 +1,47 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import * as constants from '../services/constants'
+import * as constants from "../services/constants";
+import * as helpers from "../services/helpers";
 
 class Field extends Component {
+  handleClick = (i, j) => {
+    alert(i, j);
+  };
+
   render() {
+    const { matrix } = this.props;
+
     return (
       <ul className="b-game__field-row">
         <div className="b-game__coordinate__horizontal">
           {constants.COORD_HORIZONTAL.map((coord, i) => (
-            <span key={i} className="b-game__coordinate__horizontal__item">{coord}</span>
+            <span key={i} className="b-game__coordinate__horizontal__item">
+              {coord}
+            </span>
           ))}
-          </div>
+        </div>
         <div className="b-game__coordinate__vertical">
           {constants.COORD_VERTICAL.map((coord, i) => (
-            <span key={i} className="b-game__coordinate__vertical__item">{coord}</span>
+            <span key={i} className="b-game__coordinate__vertical__item">
+              {coord}
+            </span>
           ))}
-        </div>  
+        </div>
         {constants.COORD_VERTICAL.map((row, i) => (
           <li key={i} className="b-game__field-row__item">
             <ul className="b-game__field-cell">
-            {
-              constants.COORD_HORIZONTAL.map((cell, j) => (
-                <li key={j} className="b-game__field-cell__item" title={`${cell + row}`}></li>
-              ))
-            }
+              {constants.COORD_HORIZONTAL.map((cell, j) => (
+                <li
+                  key={j}
+                  className={`b-game__field-cell__item ${helpers.getExtendClass(
+                    matrix.length ? matrix[i][j] : 0
+                  )}`}
+                  title={`${row + cell}`}
+                  onClick={this.handleClick.bind(this, i, j)}
+                >
+                  {/* {matrix.length && matrix[i][j]} */}
+                </li>
+              ))}
             </ul>
           </li>
         ))}
