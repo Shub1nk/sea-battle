@@ -1,15 +1,16 @@
 import React, { Fragment, Component } from "react";
 import Field from "./components/Field";
 import FieldBattle from "./services/FieldBattle";
+import Controller from './services/Controller';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isPlayGame: false,
-      whoseMove: "user", //TODO: рандомно определять 1 и 0
+      whoseMove: "",
       userName: "",
-      compName: ""
+      compName: "",
     };
     this.userPlayer = null;
     this.compPlayer = null;
@@ -23,10 +24,14 @@ class App extends Component {
       // Инициализируем 2 поля боя: игрока и компьютера
       this.userPlayer = new FieldBattle(this.state.userName);
       this.userPlayer.getRandomLocationShips();
+      console.log("---------------------------")
       this.compPlayer = new FieldBattle(this.state.compName);
       this.compPlayer.getRandomLocationShips();
+      // Инициализируем контроллер игры
+      this.controller = new Controller(this.userPlayer, this.compPlayer);
+      console.log(this.controller);
     }
-    this.setState({ isPlayGame: state });
+    this.setState({ isPlayGame: state, whoseMove: this.controller.init() });
   };
 
   setNamePlayer = (key, ev) => {
@@ -36,6 +41,8 @@ class App extends Component {
 
   render() {
     const { isPlayGame, userName, compName } = this.state;
+
+    console.error(this.state.whoseMove);
 
     return (
       <section className="b-game">
@@ -50,7 +57,11 @@ class App extends Component {
             ) : (
               <span className="b-game__field__user__name">{userName}</span>
             )}
-            <Field matrix={!isPlayGame ? [] : this.userPlayer.matrix} />
+            <Field 
+              matrix={!isPlayGame ? [] : this.userPlayer.matrix} 
+              player={this.userPlayer}
+              field={"user"}
+            />
           </div>
           <div className="b-game__field__comp">
             {!isPlayGame ? (
@@ -61,7 +72,11 @@ class App extends Component {
             ) : (
               <span className="b-game__field__comp__name">{compName}</span>
             )}
-            <Field matrix={!isPlayGame ? [] : this.compPlayer.matrix} />
+            <Field 
+              matrix={!isPlayGame ? [] : this.compPlayer.matrix} 
+              player={this.compPlayer}
+              field={"comp"}
+            />
           </div>
         </div>
         {!isPlayGame ? (

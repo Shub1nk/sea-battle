@@ -16,19 +16,14 @@ class FieldBattle {
     for (let i = 1; i < this.shipsCollections.length; i++) {
       // количество палуб у корабля
       const decks = this.shipsCollections[i][0];
-      console.log("decks: ", decks);
-
       // запускаем цикл на создание кораблей разных типов
       for (let j = 0; j < i; j++) {
         const fc = this.getCoordinatesDecks(decks);
         fc.decks = decks;
         fc.shipName = `${this.shipsCollections[i][1]}${j + 1}`;
 
-        console.log("fc: ", fc);
-
         // создаем экземпляр корабля
         const ship = new Ships(this, fc);
-        console.log("ship: ", ship);
         // генерируем новый корабль и добавляем его на экран
         ship.createShip();
       }

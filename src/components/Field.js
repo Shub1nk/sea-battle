@@ -5,7 +5,19 @@ import * as helpers from "../services/helpers";
 
 class Field extends Component {
   handleClick = (i, j) => {
-    alert(i, j);
+    const {field, player} = this.props;
+    if (field === 'user') return false;
+    console.log(`Выстрел ${i}-${j}`);
+    console.log(`Что тут было`, player.matrix[i][j])
+    const coordShoot = player.matrix[i][j];
+
+    switch(coordShoot) {
+      case constants.stateCell.empty: player.matrix[i][j] = constants.stateCell.miss; break;
+      case constants.stateCell.deck: player.matrix[i][j] = constants.stateCell.hit; break;
+    }
+
+    console.log(player.matrix)
+    this.forceUpdate();
   };
 
   render() {
@@ -27,7 +39,8 @@ class Field extends Component {
             </span>
           ))}
         </div>
-        {constants.COORD_VERTICAL.map((row, i) => (
+        {constants.COORD_VERTICAL.map((row, i) => {
+          return (
           <li key={i} className="b-game__field-row__item">
             <ul className="b-game__field-cell">
               {constants.COORD_HORIZONTAL.map((cell, j) => (
@@ -39,12 +52,21 @@ class Field extends Component {
                   title={`${row + cell}`}
                   onClick={this.handleClick.bind(this, i, j)}
                 >
-                  {/* {matrix.length && matrix[i][j]} */}
+                  {/* {
+                    () => {
+                      if (matrix.length && matrix[i][j]) {
+                        switch(matrix[i][j]) {
+                          case 2: return "&#10006;"
+                          case 3: return "&bull;"
+                        }
+                      }
+                    }
+                  } */}
                 </li>
               ))}
             </ul>
           </li>
-        ))}
+        )})}
       </ul>
     );
   }
