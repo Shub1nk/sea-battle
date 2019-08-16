@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import Field from "./components/Field";
 import FieldBattle from "./services/FieldBattle";
 import Controller from './services/Controller';
@@ -24,26 +24,18 @@ class App extends Component {
       // Инициализируем 2 поля боя: игрока и компьютера
       this.userPlayer = new FieldBattle(this.state.userName);
       this.userPlayer.getRandomLocationShips();
-      console.log("---------------------------")
       this.compPlayer = new FieldBattle(this.state.compName);
       this.compPlayer.getRandomLocationShips();
       // Инициализируем контроллер игры
-      this.controller = new Controller(this.userPlayer, this.compPlayer);
-      console.log(this.controller);
+      this.controller = new Controller(this.userPlayer, this.compPlayer, () => this.forceUpdate());
     }
     this.setState({ isPlayGame: state, whoseMove: this.controller.init() });
   };
 
-  setNamePlayer = (key, ev) => {
-    console.log(key);
-    this.setState({ [key]: ev.target.value });
-  };
+  setNamePlayer = (key, ev) => this.setState({ [key]: ev.target.value });
 
   render() {
     const { isPlayGame, userName, compName } = this.state;
-
-    console.error(this.state.whoseMove);
-
     return (
       <section className="b-game">
         <h3 className="b-game__title">Морской бой</h3>
@@ -76,6 +68,7 @@ class App extends Component {
               matrix={!isPlayGame ? [] : this.compPlayer.matrix} 
               player={this.compPlayer}
               field={"comp"}
+              controller={this.controller}
             />
           </div>
         </div>
@@ -98,7 +91,7 @@ class App extends Component {
         <div className="b-game__log">
           {!isPlayGame
             ? "Для начала игры, введите имена игроков!"
-            : `Ходит игрок: ${this.state.whoseMove}`}
+            : `Ходит игрок: ${this.controller.move}`}
         </div>
       </section>
     );
