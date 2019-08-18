@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       isPlayGame: false,
-      whoseMove: "",
+      whoseMove: "", // TODO: убрать это поле
       userName: "",
       compName: "",
     };
@@ -53,6 +53,8 @@ class App extends Component {
               matrix={!isPlayGame ? [] : this.userPlayer.matrix} 
               player={this.userPlayer}
               field={"user"}
+              controller={this.controller}
+              render={this.forceUpdate}
             />
           </div>
           <div className="b-game__field__comp">
@@ -69,6 +71,8 @@ class App extends Component {
               player={this.compPlayer}
               field={"comp"}
               controller={this.controller}
+              render={this.forceUpdate}
+              isPlayGame={this.state.isPlayGame}
             />
           </div>
         </div>
@@ -91,7 +95,8 @@ class App extends Component {
         <div className="b-game__log">
           {!isPlayGame
             ? "Для начала игры, введите имена игроков!"
-            : `Ходит игрок: ${this.controller.move}`}
+            : this.controller.logger
+          }
         </div>
       </section>
     );

@@ -11,10 +11,10 @@ export const HEIGHT_CELL = 10;
 
 export const shipsCollections = [
   "",
-  [4, 'fourdeck'],
-	[3, 'tripledeck'],
-	[2, 'doubledeck'],
-	[1, 'singledeck']
+  [4, 'Линкор'],
+	[3, 'Крейсер'],
+	[2, 'Эсминец'],
+	[1, 'Катер']
 ]
 
 export const stateCell = {

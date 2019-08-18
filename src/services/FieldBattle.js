@@ -20,19 +20,18 @@ class FieldBattle {
       for (let j = 0; j < i; j++) {
         const fc = this.getCoordinatesDecks(decks);
         fc.decks = decks;
-        fc.shipName = `${this.shipsCollections[i][1]}${j + 1}`;
+        fc.shipName = `${this.shipsCollections[i][1]}-${j + 1}`;
 
         // создаем экземпляр корабля
         const ship = new Ships(this, fc);
-        // генерируем новый корабль и добавляем его на экран
+        // создаем корабль
         ship.createShip();
       }
     }
   };
 
   getCoordinatesDecks = decks => {
-    // TODO: Что-то походу направления перепутаны, нужно проверить в конце
-    // получим направление корабля (directionX = 1 directionY = 0) - вертикальное расположение
+    // получим направление корабля (kx = 1 ky = 0) - вертикальное расположение
     const kx = helpers.getRandom(1);
     const ky = kx ? 0 : 1;
 
@@ -56,9 +55,10 @@ class FieldBattle {
     return { x, y, kx, ky };
   };
 
+  // TODO: в 2-х местах используется часть функции, зарефакторить и завернуть в хелпер
   // можно ли разместить корабль в данных координатах
   checkLocationShip = (x, y, kx, ky, decks) => {
-    // формируем область индексы ячеек для области проверки
+    // формируем область ячеек для проверки
     let fromX, toX, fromY, toY;
 
     // формируем индексы начала и конца цикла для строк

@@ -6,10 +6,14 @@ import * as helpers from "../services/helpers";
 class Field extends Component {
 
   handleClick = (i, j) => {
-    const {field, player, matrix} = this.props;
-    // Отключаем клики по ячейкам, если это поле игрока или в поле уже делали выстрел
+    const { field, matrix, isPlayGame, controller } = this.props;
+    // Отключаем клики по ячейкам, если это поле игрока, в поле уже делали выстрел или игра еще не началась
+    // TODO: Объединить 3 условия
+    if (!isPlayGame) return false;
+    if (controller.move !== controller.user.name) return false;
     if (field === 'user' && matrix[i][j] > 1) return false;
-    this.props.controller.shoot(player, {x: i, y: j}, () => this.forceUpdate());
+    console.log("Выстрел игрока")
+    this.props.controller.shoot({x: i, y: j});
   };
 
   render() {
