@@ -1,7 +1,7 @@
 .b-game {
   width: 800px;
-  margin: 50px auto;
-  padding: 20px 40px;
+  margin: 10px auto;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 5px black;
 }
@@ -22,10 +22,40 @@
   background: #eee;
 }
 
+.b-game__fields_opacity {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
 .b-game__button_play,
+.b-game__button_error,
 .b-game__button_reset {
   display: block;
   margin: 0 auto;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.b-game__button_play {
+  background: green ;
+}
+
+.b-game__button_error {
+  background: red;
+}
+
+.b-game__button_reset {
+  background: blue;
+}
+
+.b-game__button_play:focus,
+.b-game__button_error:focus,
+.b-game__button_reset:focus {
+  outline: none;
 }
 
 .b-game__log {
@@ -179,4 +209,95 @@
     transform: scale(1);
     box-shadow: 0 0 0 1px inset black;
   }
+}
+
+.b-game__tooltype {
+  max-height: 0px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  transition: 1s;
+}
+
+.b-game__tooltype-wrapper button {
+  text-align: center;
+  outline: none;
+  background: none;
+  border: none;
+  display: block;
+  margin: 0 auto 10px;  
+}
+
+.b-game__tooltype-wrapper button:hover {
+  text-decoration: underline;
+}
+
+
+
+.b-game__tooltype_open {
+  max-height: 350px;
+  transition: 1s;
+}
+
+.b-game__tooltype__counter-move {
+  text-align: center;
+  margin-bottom: 7px;
+}
+
+.b-game__tooltype__item {
+  width: 350px;
+}
+
+.b-game__tooltype__item__ship {
+  display: flex;
+  height: 20px;
+  line-height: 30px;
+  margin-bottom: 5px;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.b-game__tooltype__item__ship_wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.b-game__tooltype__item__ship_1,
+.b-game__tooltype__item__ship_2,
+.b-game__tooltype__item__ship_3,
+.b-game__tooltype__item__ship_4 {
+  display: inline-block;
+  height: 20px;
+  box-shadow: 0 0 0 3px inset black;
+}
+
+.b-game__tooltype__item__ship__deck {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  box-shadow: 0 0 0 3px inset black;
+  margin-left: -3px;
+}
+
+.b-game__tooltype__item__ship_1 {width: 20px}
+.b-game__tooltype__item__ship_2 {width: 40px}
+.b-game__tooltype__item__ship_3 {width: 60px}
+.b-game__tooltype__item__ship_4 {width: 80px}
+
+.b-game__tooltype__item__ship_name {
+  display: inline-block;
+  padding-left: 10px;
+}
+
+.b-game__tooltype__item__ship_state {
+  font-size: 8px;
+  font-style: italic;
+  padding: 9px 0 0 10px;
+}
+
+.b-game__tooltype__item__ship,
+.b-game__tooltype__item__ship_name, 
+.b-game__tooltype__item__ship_state {
+  width: 33%;
 }

@@ -32,6 +32,22 @@ export const getExtendClass = n => {
   }
 };
 
+// Класс кнопки
+export const getClassButton = (userName, compName, isGame) => {
+  if (isGame) return "b-game__button_reset";
+  if (!userName || !compName || (userName === compName)) return "b-game__button_error";
+  return "b-game__button_play";
+}
+
+// Текст кнопки
+export const getValueButton = (userName, compName) => {
+  if (!userName) return constats.stateButton.userName;
+  if (!compName) return constats.stateButton.compName;
+  if (userName === compName) return constats.stateButton.isEqualNames;
+  return constats.stateButton.game;
+}
+
+// Добавление класса для анимации выстрела игрока
 export const getAnimationClass = n => (n === 0 || n === 1) ? 'blinking' : '';
 
 // Установка точек вокруг потопленного корабля

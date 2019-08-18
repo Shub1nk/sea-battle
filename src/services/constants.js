@@ -23,3 +23,11 @@ export const stateCell = {
   miss: 2,
   hit: 3
 }
+
+export const stateButton = {
+  userName: "Введите ваше имя",
+  compName: "Введите имя соперника",
+  isEqualNames: "Имена совпадают",
+  game: "Играть"
+  
+}

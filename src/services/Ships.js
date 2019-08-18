@@ -8,7 +8,10 @@ class Ships {
     this.kx = fc.kx;
     this.ky = fc.ky;
     this.hits = 0; // количество попадания
-    this.matrix = []; // координаты полуб корабля
+    this.matrix = {
+      destroy: false,
+      decks: []
+    }; // координаты полуб корабля
   }
 
   createShip = () => {
@@ -19,7 +22,7 @@ class Ships {
       // записываем координаты корабля в матрицу игрового поля
       this.player.matrix[x0 + k * kx][y0 + k * ky] = 1;
       // записываем координаты корабля в матрицу экземпляра корабля
-      matrix.push([x0 + k * kx, y0 + k * ky]);
+      matrix.decks.push([x0 + k * kx, y0 + k * ky]);
       k++;
     }
     // заносим экземпляр корабля в массив флота
