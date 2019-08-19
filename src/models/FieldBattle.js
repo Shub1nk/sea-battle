@@ -1,5 +1,5 @@
-import * as constants from "./constants";
-import * as helpers from "./helpers";
+import * as constants from "../services/constants";
+import * as helpers from "../services/helpers";
 
 import Ships from "./Ships";
 

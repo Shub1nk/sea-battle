@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import FieldBattle from "./services/FieldBattle";
-import Controller from "./services/Controller";
+
+import FieldBattle from "./models/FieldBattle";
+import Controller from "./models/Controller";
 
 import Field from "./components/Field";
 import Tooltype from "./components/Tooltype";

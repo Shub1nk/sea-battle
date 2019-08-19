@@ -14,6 +14,19 @@ export const createMatrix = () => {
   return arr;
 };
 
+// Получаем массив со всеми координатами поля
+export const allCoordsField = () => {
+  const x = constats.WIDTH_CELL;
+  const y = constats.HEIGHT_CELL;
+  const arr = [];
+  for (let i = 0; i < y; i++) {
+    for (let j = 0; j < x; j++) {
+      arr.push({ x: i, y: j });
+    }
+  }
+  return arr;
+};
+
 // Получение рандомного числа
 export const getRandom = n => Math.floor(Math.random() * (n + 1));
 
@@ -51,7 +64,7 @@ export const getValueButton = (userName, compName) => {
 export const getAnimationClass = n => (n === 0 || n === 1 ? "blinking" : "");
 
 // Установка точек вокруг потопленного корабля
-export const setMissesAroundShip = (ship, field) => {
+export const setMissesAroundShip = (ship, field, targetCoords) => {
   const { x0, y0, kx, ky, decks } = ship;
   // console.log(x0, y0, kx, ky, decks)
 
@@ -90,6 +103,16 @@ export const setMissesAroundShip = (ship, field) => {
   for (var i = fromX; i < toX; i++) {
     for (var j = fromY; j < toY; j++) {
       if (field.matrix[i][j] === 0) field.matrix[i][j] = 2;
+      if (targetCoords) {
+        const index = targetCoords.findIndex(coords => {
+          if (coords.x === i && coords.y === j) return true;
+        });
+        if (index !== -1) {
+          targetCoords.splice(index, 1);
+          console.log(`{x:${i}, y:${j}}`);
+          console.log("-length: ", targetCoords.length);
+        }
+      }
     }
   }
 };
