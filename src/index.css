@@ -41,7 +41,7 @@
 }
 
 .b-game__button_play {
-  background: green ;
+  background: green;
 }
 
 .b-game__button_error {
@@ -140,7 +140,7 @@
 }
 
 .b-game__field-cell__item_miss::before {
-  content: '\2022';
+  content: "\2022";
   position: absolute;
   display: block;
   height: 30px;
@@ -152,18 +152,17 @@
   transform: translate(-50%, -25%);
 }
 
-
 .b-game__field-cell__item_hit::before {
-  content: '\2716';
+  content: "+";
   position: absolute;
   display: block;
   height: 30px;
   width: 30px;
-  top: 50%;
-  left: 50%;
+  left: -6px;
   color: red;
-  font-size: 25px;
-  transform: translate(-50%, -25%);
+  font-size: 55px;
+  transform: translate(-50%, -35%);
+  transform: rotate(45deg);
 }
 
 .b-game__coordinate__horizontal {
@@ -225,14 +224,12 @@
   background: none;
   border: none;
   display: block;
-  margin: 0 auto 10px;  
+  margin: 0 auto 10px;
 }
 
 .b-game__tooltype-wrapper button:hover {
   text-decoration: underline;
 }
-
-
 
 .b-game__tooltype_open {
   max-height: 350px;
@@ -255,7 +252,6 @@
   margin-bottom: 5px;
   justify-content: flex-end;
   align-items: center;
-
 }
 
 .b-game__tooltype__item__ship_wrapper {
@@ -280,10 +276,18 @@
   margin-left: -3px;
 }
 
-.b-game__tooltype__item__ship_1 {width: 20px}
-.b-game__tooltype__item__ship_2 {width: 40px}
-.b-game__tooltype__item__ship_3 {width: 60px}
-.b-game__tooltype__item__ship_4 {width: 80px}
+.b-game__tooltype__item__ship_1 {
+  width: 20px;
+}
+.b-game__tooltype__item__ship_2 {
+  width: 40px;
+}
+.b-game__tooltype__item__ship_3 {
+  width: 60px;
+}
+.b-game__tooltype__item__ship_4 {
+  width: 80px;
+}
 
 .b-game__tooltype__item__ship_name {
   display: inline-block;
@@ -297,7 +301,7 @@
 }
 
 .b-game__tooltype__item__ship,
-.b-game__tooltype__item__ship_name, 
+.b-game__tooltype__item__ship_name,
 .b-game__tooltype__item__ship_state {
   width: 33%;
 }

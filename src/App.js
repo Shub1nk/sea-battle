@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import FieldBattle from "./services/FieldBattle";
-import Controller from './services/Controller';
+import Controller from "./services/Controller";
 
 import Field from "./components/Field";
 import Tooltype from "./components/Tooltype";
 
-import * as helpers from './services/helpers';
-import * as constants from './services/constants';
+import * as helpers from "./services/helpers";
+import * as constants from "./services/constants";
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class App extends Component {
       isPlayGame: false,
       userName: "",
       compName: "",
-      isOpenReference: false,
+      isOpenReference: false
     };
     this.userPlayer = null;
     this.compPlayer = null;
@@ -32,7 +32,9 @@ class App extends Component {
       this.compPlayer = new FieldBattle(this.state.compName);
       this.compPlayer.getRandomLocationShips();
       // Инициализируем контроллер игры
-      this.controller = new Controller(this.userPlayer, this.compPlayer, () => this.forceUpdate());
+      this.controller = new Controller(this.userPlayer, this.compPlayer, () =>
+        this.forceUpdate()
+      );
       this.controller.init();
     }
     this.setState({ isPlayGame: state });
@@ -45,7 +47,13 @@ class App extends Component {
     return (
       <section className="b-game">
         <h3 className="b-game__title">Морской бой</h3>
-        <div className={`b-game__fields ${this.controller && this.controller.winner ? "b-game__fields_opacity" : ""}`}>
+        <div
+          className={`b-game__fields ${
+            this.controller && this.controller.winner
+              ? "b-game__fields_opacity"
+              : ""
+          }`}
+        >
           <div className="b-game__field__user">
             {!isPlayGame ? (
               <input
@@ -55,8 +63,8 @@ class App extends Component {
             ) : (
               <span className="b-game__field__user__name">{userName}</span>
             )}
-            <Field 
-              matrix={!isPlayGame ? [] : this.userPlayer.matrix} 
+            <Field
+              matrix={!isPlayGame ? [] : this.userPlayer.matrix}
               player={this.userPlayer}
               field={"user"}
               controller={this.controller}
@@ -72,8 +80,8 @@ class App extends Component {
             ) : (
               <span className="b-game__field__comp__name">{compName}</span>
             )}
-            <Field 
-              matrix={!isPlayGame ? [] : this.compPlayer.matrix} 
+            <Field
+              matrix={!isPlayGame ? [] : this.compPlayer.matrix}
               player={this.compPlayer}
               field={"comp"}
               controller={this.controller}
@@ -81,12 +89,19 @@ class App extends Component {
               isPlayGame={this.state.isPlayGame}
             />
           </div>
-        </div>        
+        </div>
         {!isPlayGame ? (
           <button
-            className={`${helpers.getClassButton(userName, compName, isPlayGame)}`}
+            className={`${helpers.getClassButton(
+              userName,
+              compName,
+              isPlayGame
+            )}`}
             onClick={this.handleGame.bind(this, true)}
-            disabled={helpers.getValueButton(userName, compName) !== constants.stateButton.game}
+            disabled={
+              helpers.getValueButton(userName, compName) !==
+              constants.stateButton.game
+            }
           >
             {helpers.getValueButton(userName, compName)}
           </button>
@@ -99,37 +114,57 @@ class App extends Component {
           </button>
         )}
         <div className="b-game__log">
-          {isPlayGame
-            ? this.controller.logger
-            : ""
-          }
+          {isPlayGame ? this.controller.logger : ""}
         </div>
         {isPlayGame && (
-            <section className="b-game__tooltype-wrapper">
-              {!this.controller.winner 
-                  ? (<p className="b-game__tooltype__counter-move">Количество ходов: <b>{this.controller.couterMove}</b></p>) 
-                  : (
-                      <p className="b-game__tooltype__counter-move">
-                        <b>Победитель:&nbsp; 
-                          <span 
-                            style={{color: `${this.controller.winner === this.userPlayer.name ? "green" : "red"}`}}
-                          >
-                            {this.controller.winner}
-                          </span>
-                        </b>
-                      </p>
-                    )
+          <section className="b-game__tooltype-wrapper">
+            {!this.controller.winner ? (
+              <p className="b-game__tooltype__counter-move">
+                Количество ходов: <b>{this.controller.couterMove}</b>
+              </p>
+            ) : (
+              <p className="b-game__tooltype__counter-move">
+                <b>
+                  Победитель:&nbsp;
+                  <span
+                    style={{
+                      color: `${
+                        this.controller.winner === this.userPlayer.name
+                          ? "green"
+                          : "red"
+                      }`
+                    }}
+                  >
+                    {this.controller.winner}
+                  </span>
+                </b>
+              </p>
+            )}
+            <button
+              onClick={() =>
+                this.setState({ isOpenReference: !this.state.isOpenReference })
               }
-              <button onClick={() => this.setState({isOpenReference: !this.state.isOpenReference})}>
-                {!isOpenReference ? "Открыть сводку по эскадрам" : "Закрыть сводку по эскадрам"}
-              </button>
-              <div className={`b-game__tooltype ${isOpenReference ? "b-game__tooltype_open" : ""}`}>
-                <Tooltype isPlayGame={this.state.isPlayGame} player={this.userPlayer}/>
-                <Tooltype isPlayGame={this.state.isPlayGame} player={this.compPlayer}/>
-              </div>
-            </section>
-          )
-        }
+            >
+              {!isOpenReference
+                ? "Открыть сводку по эскадрам"
+                : "Закрыть сводку по эскадрам"}
+            </button>
+            <div
+              className={`b-game__tooltype ${
+                isOpenReference ? "b-game__tooltype_open" : ""
+              }`}
+            >
+              <Tooltype
+                isPlayGame={this.state.isPlayGame}
+                player={this.userPlayer}
+              />
+              <Tooltype
+                isPlayGame={this.state.isPlayGame}
+                player={this.compPlayer}
+              />
+            </div>
+          </section>
+        )}
       </section>
     );
   }

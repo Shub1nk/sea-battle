@@ -9,7 +9,6 @@ export const createMatrix = () => {
     arr[i] = [];
     for (let j = 0; j < x; j++) {
       arr[i][j] = 0;
-      // arr[i][j] = Math.floor(Math.random() * 4);
     }
   }
   return arr;
@@ -26,7 +25,7 @@ export const getExtendClass = n => {
     case constats.stateCell.miss:
       return "b-game__field-cell__item_miss";
     case constats.stateCell.hit:
-      return "b-game__field-cell__item_hit";  
+      return "b-game__field-cell__item_hit";
     default:
       return "";
   }
@@ -35,9 +34,10 @@ export const getExtendClass = n => {
 // Класс кнопки
 export const getClassButton = (userName, compName, isGame) => {
   if (isGame) return "b-game__button_reset";
-  if (!userName || !compName || (userName === compName)) return "b-game__button_error";
+  if (!userName || !compName || userName === compName)
+    return "b-game__button_error";
   return "b-game__button_play";
-}
+};
 
 // Текст кнопки
 export const getValueButton = (userName, compName) => {
@@ -45,14 +45,14 @@ export const getValueButton = (userName, compName) => {
   if (!compName) return constats.stateButton.compName;
   if (userName === compName) return constats.stateButton.isEqualNames;
   return constats.stateButton.game;
-}
+};
 
 // Добавление класса для анимации выстрела игрока
-export const getAnimationClass = n => (n === 0 || n === 1) ? 'blinking' : '';
+export const getAnimationClass = n => (n === 0 || n === 1 ? "blinking" : "");
 
 // Установка точек вокруг потопленного корабля
 export const setMissesAroundShip = (ship, field) => {
-  const {x0, y0, kx, ky, decks} = ship
+  const { x0, y0, kx, ky, decks } = ship;
   // console.log(x0, y0, kx, ky, decks)
 
   // формируем область индексы ячеек для области проверки
@@ -87,11 +87,9 @@ export const setMissesAroundShip = (ship, field) => {
   // запускаем циклы и проверяем выбранный диапазон ячеек
   // если значение текущей ячейки равно 0 - пустота меняем на 2 - промах
 
-
   for (var i = fromX; i < toX; i++) {
     for (var j = fromY; j < toY; j++) {
-      if (field.matrix[i][j] === 0) field.matrix[i][j] = 2
+      if (field.matrix[i][j] === 0) field.matrix[i][j] = 2;
     }
   }
-}
-
+};
