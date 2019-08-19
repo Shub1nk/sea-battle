@@ -30,13 +30,8 @@ class Controller {
     this.comp.targetCoords = helpers.allCoordsField();
     // Если при инициализации первым ходит компьютер, он должен сделать выстрел
     if (this.move === this.comp.name) {
-      console.log(
-        "this.comp.targetCoords.length: ",
-        this.comp.targetCoords.length
-      );
-      const positionCoords = helpers.getRandom(this.comp.targetCoords.length);
+      const positionCoords = helpers.getRandom(this.comp.targetCoords.length-1);
       const valueCoords = this.comp.targetCoords[positionCoords];
-      // this.shoot({ x: helpers.getRandom(9), y: helpers.getRandom(9) });
       this.shoot(valueCoords, positionCoords);
     }
   };
@@ -56,10 +51,13 @@ class Controller {
           // Следующий ход делает компьютер
           this.move = this.comp.name;
           this.initRender();
-          return this.shoot({
-            x: helpers.getRandom(9),
-            y: helpers.getRandom(9)
-          });
+
+          const positionCoords = helpers.getRandom(
+            this.comp.targetCoords.length-1
+          );
+          const valueCoords = this.comp.targetCoords[positionCoords];
+          this.shoot(valueCoords, positionCoords);
+          break;
         }
         case constants.stateCell.deck: {
           this.logger = `Вы поразили корабль противника`;
@@ -88,8 +86,7 @@ class Controller {
       }
     } else {
       setTimeout(() => {
-        console.log("coords: ", coords);
-        const coordsValue = this.user.matrix[coords.x][coords.y];
+        const coordsValue = this.user.matrix[coords.x][coords.y];        
 
         switch (coordsValue) {
           // Если поле пустое - промах. Ходит игрок.
@@ -98,8 +95,6 @@ class Controller {
             this.logger = `Игрок ${this.comp.name} промахнулся! Ваш ход!`;
             this.user.matrix[coords.x][coords.y] = constants.stateCell.miss;
             this.comp.targetCoords.splice(coordPosition, 1);
-            // console.log("this.comp.targetCoords: ", this.comp.targetCoords);
-            console.log("length: ", this.comp.targetCoords.length);
             this.move = this.user.name;
             this.initRender();
             break;
@@ -112,7 +107,6 @@ class Controller {
 
             // Удаляем координату из массива целевых координат
             this.comp.targetCoords.splice(coordPosition, 1);
-            console.log("length: ", this.comp.targetCoords.length);
 
             // TODO: Если что, здесь нужно анализатор какой-то прикручивать, чтобы он стрелял по вертикали или горизонатли, пока не загубит корабль
 
@@ -140,22 +134,16 @@ class Controller {
             this.move = this.comp.name;
             this.initRender();
             // Определяем новую координату из тех что остались
+            
             const positionCoords = helpers.getRandom(
-              this.comp.targetCoords.length
-            );
+              this.comp.targetCoords.length-1
+              );
             const valueCoords = this.comp.targetCoords[positionCoords];
-            // this.shoot({ x: helpers.getRandom(9), y: helpers.getRandom(9) });
             this.shoot(valueCoords, positionCoords);
-            // this.shoot({ x: helpers.getRandom(9), y: helpers.getRandom(9) });
-            break;
-          }
-          // Если поле имело значение 2 или 3, значит в это поле уже стреляли, инициируем новый выстрел
-          default: {
-            this.shoot({ x: helpers.getRandom(9), y: helpers.getRandom(9) });
             break;
           }
         }
-      }, 500);
+      }, 1000);
     }
 
     // проверяем сколько кораблей у игроков осталось

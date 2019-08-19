@@ -107,11 +107,7 @@ export const setMissesAroundShip = (ship, field, targetCoords) => {
         const index = targetCoords.findIndex(coords => {
           if (coords.x === i && coords.y === j) return true;
         });
-        if (index !== -1) {
-          targetCoords.splice(index, 1);
-          console.log(`{x:${i}, y:${j}}`);
-          console.log("-length: ", targetCoords.length);
-        }
+        if (index !== -1) targetCoords.splice(index, 1);          
       }
     }
   }
