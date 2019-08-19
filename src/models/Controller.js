@@ -1,12 +1,6 @@
 import * as constants from "../services/constants";
 import * as helpers from "../services/helpers";
 
-// TODO: Проверить таймер. Если компьютер стреляет в уже пробитую координату, таймер меньше делать
-// TODO: Когда игра закончена, отключить клики по полю и выдавать сообщение о том, кто же выиграл
-// TODO: Анимация размышления хода компьютера
-// TODO: Массив координат, по которым можно стрелять
-// TODO: При сбросе игры, очищать виннера - чтобы opacity спадала
-
 class Controller {
   constructor(user, enemy, render) {
     this.user = user;
@@ -108,8 +102,6 @@ class Controller {
             // Удаляем координату из массива целевых координат
             this.comp.targetCoords.splice(coordPosition, 1);
 
-            // TODO: Если что, здесь нужно анализатор какой-то прикручивать, чтобы он стрелял по вертикали или горизонатли, пока не загубит корабль
-
             // проверяем попали ли в какой-нибудь корабль
             this.user.squadron.forEach((ship, shipInd) => {
               ship.matrix.decks.forEach(shipCoords => {
@@ -118,6 +110,7 @@ class Controller {
                   // если количество попадений равно количеству палуб - корабль потоплен
                   if (ship.hits === ship.decks) {
                     this.user.squadron[shipInd].matrix.destroy = true;
+                    // Если корабль потоплен, очищаем координаты последнего удачного выстрела
                     this.logger = `Игрок ${
                       this.comp.name
                     } уничтожил ваш корабль: ${ship.shipName}`;
@@ -133,17 +126,13 @@ class Controller {
             });
             this.move = this.comp.name;
             this.initRender();
-            // Определяем новую координату из тех что остались
-            
-            const positionCoords = helpers.getRandom(
-              this.comp.targetCoords.length-1
-              );
+            const positionCoords = helpers.getRandom(this.comp.targetCoords.length-1);
             const valueCoords = this.comp.targetCoords[positionCoords];
             this.shoot(valueCoords, positionCoords);
             break;
           }
         }
-      }, 1000);
+      }, 1500);
     }
 
     // проверяем сколько кораблей у игроков осталось

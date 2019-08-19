@@ -63,11 +63,7 @@ export const getValueButton = (userName, compName) => {
 // Добавление класса для анимации выстрела игрока
 export const getAnimationClass = n => (n === 0 || n === 1 ? "blinking" : "");
 
-// Установка точек вокруг потопленного корабля
-export const setMissesAroundShip = (ship, field, targetCoords) => {
-  const { x0, y0, kx, ky, decks } = ship;
-  // console.log(x0, y0, kx, ky, decks)
-
+export const getAreaCoords = (x, y, kx, ky, decks) => {
   // формируем область индексы ячеек для области проверки
   let fromX, toX, fromY, toY;
 
@@ -76,26 +72,34 @@ export const setMissesAroundShip = (ship, field, targetCoords) => {
   // т. е. примыкает к верхней границе и началом цикла будет строка с индексом 0
   // в противном случае, нужно начать проверку со строки с индексом на единицу меньшим, чем у
   // исходной, т.е. находящейся выше исходной строки
-  fromX = !x0 ? x0 : x0 - 1;
+  fromX = !x ? x : x - 1;
 
   // если условие истинно - это значит, что корабль расположен вертикально и его последняя палуба примыкает
   // к нижней границе игрового поля
   // поэтому координата 'x' последней палубы будет индексом конца цикла
-  if (x0 + kx * decks === 10 && kx === 1) toX = x0 + kx * decks;
+  if (x + kx * decks === 10 && kx === 1) toX = x + kx * decks;
   // корабль расположен вертикально и между ним и нижней границей игрового поля есть, как минимум, ещё
   // одна строка, координата этой строки и будет индексом конца цикла
-  else if (x0 + kx * decks < 10 && kx === 1) toX = x0 + kx * decks + 1;
+  else if (x + kx * decks < 10 && kx === 1) toX = x + kx * decks + 1;
   // корабль расположен горизонтально вдоль нижней границы игрового поля
-  else if (x0 === 9 && kx === 0) toX = x0 + 1;
+  else if (x === 9 && kx === 0) toX = x + 1;
   // корабль расположен горизонтально где-то по середине игрового поля
-  else if (x0 < 9 && kx === 0) toX = x0 + 2;
+  else if (x < 9 && kx === 0) toX = x + 2;
 
-  fromY = y0 === 0 ? y0 : y0 - 1;
+  fromY = y === 0 ? y : y - 1;
 
-  if (y0 + ky * decks === 10 && ky === 1) toY = y0 + ky * decks;
-  else if (y0 + ky * decks < 10 && ky === 1) toY = y0 + ky * decks + 1;
-  else if (y0 === 9 && ky === 0) toY = y0 + 1;
-  else if (y0 < 9 && ky === 0) toY = y0 + 2;
+  if (y + ky * decks === 10 && ky === 1) toY = y + ky * decks;
+  else if (y + ky * decks < 10 && ky === 1) toY = y + ky * decks + 1;
+  else if (y === 9 && ky === 0) toY = y + 1;
+  else if (y < 9 && ky === 0) toY = y + 2;
+
+  return {fromX, toX, fromY, toY};
+}
+
+// Установка точек вокруг потопленного корабля
+export const setMissesAroundShip = (ship, field, targetCoords) => {
+  const { x0, y0, kx, ky, decks } = ship;
+  const { fromX, toX, fromY, toY } = getAreaCoords(x0, y0, kx, ky, decks);
 
   // запускаем циклы и проверяем выбранный диапазон ячеек
   // если значение текущей ячейки равно 0 - пустота меняем на 2 - промах
@@ -112,3 +116,10 @@ export const setMissesAroundShip = (ship, field, targetCoords) => {
     }
   }
 };
+
+export const getNewCoords = (coords, targetCoords) => {
+  console.group("Определение новой координаты");
+  console.log("coords", coords);
+  console.log("targetCoords", targetCoords);
+  console.groupEnd();
+}

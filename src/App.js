@@ -24,7 +24,13 @@ class App extends Component {
 
   handleGame = state => {
     if (!state) {
-      // TODO: Сбрасываем игру и все состояния
+      this.setState({ 
+        isPlayGame: state,
+        userName: "",
+        compName: "",
+        isOpenReference: false 
+      });
+      this.controller.winner = null;
     } else {
       // Начинаем игру
       // Инициализируем 2 поля боя: игрока и компьютера
@@ -86,7 +92,6 @@ class App extends Component {
               player={this.compPlayer}
               field={"comp"}
               controller={this.controller}
-              // render={this.forceUpdate} // TODO: Нужны ли здесь рендеры?
               isPlayGame={this.state.isPlayGame}
             />
           </div>
@@ -115,8 +120,16 @@ class App extends Component {
           </button>
         )}
         <div className="b-game__log">
+          {this.controller && 
+            this.controller.move === this.compPlayer.name && 
+            (
+            <div className="lds-facebook"><div></div><div></div><div></div></div>
+            )
+          } 
+          
           {isPlayGame ? this.controller.logger : ""}
         </div>
+        
         {isPlayGame && (
           <section className="b-game__tooltype-wrapper">
             {!this.controller.winner ? (
