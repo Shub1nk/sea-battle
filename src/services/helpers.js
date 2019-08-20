@@ -44,7 +44,7 @@ export const getExtendClass = n => {
   }
 };
 
-// Класс кнопки
+// Определение класса кнопки
 export const getClassButton = (userName, compName, isGame) => {
   if (isGame) return "b-game__button_reset";
   if (!userName || !compName || userName === compName)
@@ -52,7 +52,7 @@ export const getClassButton = (userName, compName, isGame) => {
   return "b-game__button_play";
 };
 
-// Текст кнопки
+// Определение текста кнопки
 export const getValueButton = (userName, compName) => {
   if (!userName) return constats.stateButton.userName;
   if (!compName) return constats.stateButton.compName;
@@ -63,15 +63,30 @@ export const getValueButton = (userName, compName) => {
 // Добавление класса для анимации выстрела игрока
 export const getAnimationClass = n => (n === 0 || n === 1 ? "blinking" : "");
 
+/**
+ * Формирует область координат вокруг корабля.
+ * Используется:
+ * 1. Для проверок при расстановке кораблей перед началом игры
+ * 2. Для выделения области вокруг потопленного корабля
+ * @param {number} x - координата первой палубы
+ * @param {number} y - координата первоый палубы
+ * @param {number} kx - коэффициент расположения
+ * @param {number} ky - коэффициент расположения
+ * @param {number} decks - количество палуб
+ *
+ * fromY  -    -    -    -    -
+ * fromX d-1  d-2  d-3  d-4  toX
+ *  toY   -    -    -    -    -
+ */
+
 export const getAreaCoords = (x, y, kx, ky, decks) => {
-  // формируем область индексы ячеек для области проверки
+  // Формируем область ячеек
   let fromX, toX, fromY, toY;
 
   // формируем индексы начала и конца цикла для строк
-  // если координата 'x' равна нулю, то это значит, что палуба расположена в самой верхней строке,
-  // т. е. примыкает к верхней границе и началом цикла будет строка с индексом 0
-  // в противном случае, нужно начать проверку со строки с индексом на единицу меньшим, чем у
-  // исходной, т.е. находящейся выше исходной строки
+  // если координата 'x' равна нулю - палуба примыкает к границе,
+  // в противном случае x-1
+
   fromX = !x ? x : x - 1;
 
   // если условие истинно - это значит, что корабль расположен вертикально и его последняя палуба примыкает
@@ -93,16 +108,21 @@ export const getAreaCoords = (x, y, kx, ky, decks) => {
   else if (y === 9 && ky === 0) toY = y + 1;
   else if (y < 9 && ky === 0) toY = y + 2;
 
-  return {fromX, toX, fromY, toY};
-}
+  return { fromX, toX, fromY, toY };
+};
 
-// Установка точек вокруг потопленного корабля
+/**
+ * Расставляет точки вокруг потопленного корабля
+ * @param {Ship} ship             - модель корабля
+ * @param {FieldBattle} field     - модель игрового поля
+ * @param {object[]} targetCoords - массив целевых координат для компьютера
+ */
 export const setMissesAroundShip = (ship, field, targetCoords) => {
   const { x0, y0, kx, ky, decks } = ship;
   const { fromX, toX, fromY, toY } = getAreaCoords(x0, y0, kx, ky, decks);
 
   // запускаем циклы и проверяем выбранный диапазон ячеек
-  // если значение текущей ячейки равно 0 - пустота меняем на 2 - промах
+  // если значение текущей ячейки равно 0 - меняем на 2 (промах)
 
   for (var i = fromX; i < toX; i++) {
     for (var j = fromY; j < toY; j++) {
@@ -111,15 +131,8 @@ export const setMissesAroundShip = (ship, field, targetCoords) => {
         const index = targetCoords.findIndex(coords => {
           if (coords.x === i && coords.y === j) return true;
         });
-        if (index !== -1) targetCoords.splice(index, 1);          
+        if (index !== -1) targetCoords.splice(index, 1);
       }
     }
   }
 };
-
-export const getNewCoords = (coords, targetCoords) => {
-  console.group("Определение новой координаты");
-  console.log("coords", coords);
-  console.log("targetCoords", targetCoords);
-  console.groupEnd();
-}

@@ -1,7 +1,18 @@
 import * as constants from "../services/constants";
 import * as helpers from "../services/helpers";
 
-import Ships from "./Ships";
+import Ship from "./Ship";
+
+/**
+ * Создает экземпляр игрового поля игрока или компьютера
+ * @param {string} name                     - имя игрока
+ * @param {Array[]} shipsCollections        - колекция кораблей
+ * @param {Ship[]} squadron                 - массив экземпляров кораблей
+ * @param {Array[]} matrix                  - координатая сетка
+ * @param {Function} getRandomLocationShips - определение начальных координат корабля
+ * @param {Function} getCoordinatesDecks    - определение координат всех палуб
+ * @param {Function} checkLocationShip      - определение возможности разместить корабль по полученным координатам
+ */
 
 class FieldBattle {
   constructor(name) {
@@ -14,31 +25,30 @@ class FieldBattle {
   getRandomLocationShips = () => {
     // Запускаем цикл создания кораблей
     for (let i = 1; i < this.shipsCollections.length; i++) {
-      // количество палуб у корабля
+      // Количество палуб у корабля
       const decks = this.shipsCollections[i][0];
-      // запускаем цикл на создание кораблей разных типов
+      // Запускаем цикл для формирования корабля
       for (let j = 0; j < i; j++) {
         const fc = this.getCoordinatesDecks(decks);
         fc.decks = decks;
         fc.shipName = `${this.shipsCollections[i][1]}-${j + 1}`;
 
-        // создаем экземпляр корабля
-        const ship = new Ships(this, fc);
-        // создаем корабль
+        // Создаем экземпляр корабля
+        const ship = new Ship(this, fc);
         ship.createShip();
       }
     }
   };
 
   getCoordinatesDecks = decks => {
-    // получим направление корабля (kx = 1 ky = 0) - вертикальное расположение
+    // Получим направление корабля (kx = 1 ky = 0) - вертикальное расположение
     const kx = helpers.getRandom(1);
     const ky = kx ? 0 : 1;
 
-    // координаты 1 палубы
+    // Координаты 1 палубы
     let x, y;
 
-    // если направление вертикальное 1 <= x <= 10, 1 <= y <= 10-decks, если горизонтальное - наоборот
+    // Если направление вертикальное 1 <= x <= 10, 1 <= y <= 10-decks, если горизонтальное - наоборот
     if (!kx) {
       x = helpers.getRandom(9);
       y = helpers.getRandom(10 - decks);
@@ -47,20 +57,25 @@ class FieldBattle {
       y = helpers.getRandom(9);
     }
 
-    // проверяем валидность координат корабля: нет ли в полученных координатах или рядом уже других кораблей
+    // Проверяем валидность координат корабля: нет ли в полученных координатах или рядом уже других кораблей
     const isCheck = this.checkLocationShip(x, y, kx, ky, decks);
     if (!isCheck) return this.getCoordinatesDecks(decks);
 
-    // возвращаем объект с начальными координатами и направлением палуб
+    // Возвращаем объект с начальными координатами и направлением палуб
     return { x, y, kx, ky };
   };
 
-  // можно ли разместить корабль в данных координатах
   checkLocationShip = (x, y, kx, ky, decks) => {
-    // формируем область ячеек для проверки
-    const { fromX, toX, fromY, toY } = helpers.getAreaCoords(x, y, kx, ky, decks);
+    // Формируем область ячеек для проверки
+    const { fromX, toX, fromY, toY } = helpers.getAreaCoords(
+      x,
+      y,
+      kx,
+      ky,
+      decks
+    );
 
-    // запускаем циклы и проверяем выбранный диапазон ячеек
+    // Запускаем цикл и проверяем выбранный диапазон ячеек
     // если значение текущей ячейки равно 1 (там есть палуба корабля)
     // возвращаем false
     for (var i = fromX; i < toX; i++) {

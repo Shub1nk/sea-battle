@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-import FieldBattle from "./models/FieldBattle";
-import Controller from "./models/Controller";
-
 import Field from "./components/Field";
 import Tooltype from "./components/Tooltype";
+
+import FieldBattle from "./models/FieldBattle";
+import Controller from "./models/Controller";
 
 import * as helpers from "./services/helpers";
 import * as constants from "./services/constants";
@@ -24,11 +24,11 @@ class App extends Component {
 
   handleGame = state => {
     if (!state) {
-      this.setState({ 
+      this.setState({
         isPlayGame: state,
         userName: "",
         compName: "",
-        isOpenReference: false 
+        isOpenReference: false
       });
       this.controller.winner = null;
     } else {
@@ -120,16 +120,17 @@ class App extends Component {
           </button>
         )}
         <div className="b-game__log">
-          {this.controller && 
-            this.controller.move === this.compPlayer.name && 
-            (
-            <div className="lds-facebook"><div></div><div></div><div></div></div>
-            )
-          } 
-          
+          {this.controller && this.controller.move === this.compPlayer.name && (
+            <div className="lds-facebook">
+              <div />
+              <div />
+              <div />
+            </div>
+          )}
+
           {isPlayGame ? this.controller.logger : ""}
         </div>
-        
+
         {isPlayGame && (
           <section className="b-game__tooltype-wrapper">
             {!this.controller.winner ? (

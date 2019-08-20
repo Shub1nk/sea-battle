@@ -11,6 +11,8 @@
   margin-bottom: 20px;
 }
 
+/* Игровые поля */
+
 .b-game__fields {
   display: flex;
   justify-content: space-around;
@@ -25,42 +27,6 @@
 .b-game__fields_opacity {
   opacity: 0.25;
   cursor: not-allowed;
-}
-
-.b-game__button_play,
-.b-game__button_error,
-.b-game__button_reset {
-  display: block;
-  margin: 0 auto;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  color: white;
-  font-weight: bold;
-}
-
-.b-game__button_play {
-  background: green;
-}
-
-.b-game__button_error {
-  background: red;
-}
-
-.b-game__button_reset {
-  background: blue;
-}
-
-.b-game__button_play:focus,
-.b-game__button_error:focus,
-.b-game__button_reset:focus {
-  outline: none;
-}
-
-.b-game__log {
-  padding: 10px;
-  text-align: center;
 }
 
 .b-game__field__user,
@@ -165,6 +131,48 @@
   transform: rotate(45deg);
 }
 
+/* Состояние кнопки запуска игры */
+
+.b-game__button_play,
+.b-game__button_error,
+.b-game__button_reset {
+  display: block;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.b-game__button_play {
+  background: green;
+}
+
+.b-game__button_error {
+  background: red;
+}
+
+.b-game__button_reset {
+  background: blue;
+}
+
+.b-game__button_play:focus,
+.b-game__button_error:focus,
+.b-game__button_reset:focus {
+  outline: none;
+}
+
+/* Вывод игровых сообщений */
+
+.b-game__log {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Координатная сетка */
+
 .b-game__coordinate__horizontal {
   position: absolute;
   bottom: 100%;
@@ -190,6 +198,8 @@
   font-weight: bold;
 }
 
+/* Анимация для хода игрока */
+
 .blinking:hover {
   animation: blinking 2s ease-in-out infinite;
 }
@@ -209,6 +219,8 @@
     box-shadow: 0 0 0 1px inset black;
   }
 }
+
+/* Сводка по игре */
 
 .b-game__tooltype {
   max-height: 0px;
@@ -306,7 +318,7 @@
   width: 33%;
 }
 
-/**/
+/* Лоадер взял готовый (https://loading.io/css/). Отображается при ходе компьютера */
 
 .lds-facebook {
   display: inline-block;
@@ -340,9 +352,9 @@
     top: 6px;
     height: 31px;
   }
-  50%, 100% {
+  50%,
+  100% {
     top: 19px;
     height: 10px;
   }
 }
-
